@@ -14,8 +14,8 @@ News App is a Flutter-based mobile application that provides users with the late
 
 ## Screenshots
 
-![Home Screen](screenshots/home_screen.png)
-![Details Screen](screenshots/details_screen.png)
+<img src="https://github.com/user-attachments/assets/a18d2825-48b2-4193-92cb-03c1b906f84f" alt="Home Screen" width="300"/>
+<img src="https://github.com/user-attachments/assets/f27ade9c-d24c-4125-ba75-c7a782b6cf32" alt="Details Screen" width="300"/>
 
 ## Installation
 
