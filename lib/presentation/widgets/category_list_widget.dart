@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,7 +25,6 @@ class CategoryListWidget extends StatelessWidget {
                 cubit.setSelectedLogo = cubit.logo[index];
                 cubit.selectCategory = cubit.categories[index];
                 cubit.getNews();
-                log(cubit.selectedCategory);
               },
               color: cubit.selectedCategory == cubit.categories[index]
                   ? Colors.blue

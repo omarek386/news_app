@@ -16,45 +16,53 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     NewsCubit cubit = context.read<NewsCubit>();
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
+    return PopScope(
+      child: Scaffold(
           backgroundColor: Colors.white,
-          title: Text('Newsify', style: MyFontStyle.black25Bold),
-          centerTitle: true,
-        ),
-        body: BlocBuilder<NewsCubit, NewsState>(
-          builder: (context, state) {
-            if (state is NewsInitial) {
-              Future.delayed(const Duration(seconds: 5), () {
-                cubit.getNews();
-              });
-              return Center(
-                child: Lottie.asset('assets/hellow.json'),
-              );
-            } else if (state is NewsLoading || state is NewsLoaded) {
-              return Column(
-                children: [
-                  Lottie.asset(cubit.selectedLogo, height: 200.h),
-                  CategoryListWidget(),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'News For You',
-                      style: MyFontStyle.black20Bold,
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
+            title: Text('Newsify', style: MyFontStyle.black25Bold),
+            centerTitle: true,
+          ),
+          body: BlocBuilder<NewsCubit, NewsState>(
+            builder: (context, state) {
+              if (state is NewsInitial) {
+                Future.delayed(const Duration(seconds: 5), () {
+                  cubit.getNews();
+                });
+                return Center(
+                  child: Lottie.asset('assets/hellow.json'),
+                );
+              } else if (state is NewsLoading || state is NewsLoaded) {
+                return CustomScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  slivers: [
+                    SliverToBoxAdapter(
+                        child: Lottie.asset(cubit.selectedLogo, height: 200.h)),
+                    // ignore: prefer_const_constructors
+                    SliverToBoxAdapter(child: CategoryListWidget()),
+                    SliverToBoxAdapter(
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'News For You',
+                          style: MyFontStyle.black20Bold,
+                        ),
+                      ),
                     ),
-                  ),
-                  state is NewsLoading
-                      ? const LoadingData()
-                      : const ArticlesListView(),
-                ],
-              );
-            } else if (state is NewsError) {
-              return Center(child: Text(state.message));
-            } else {
-              return Container();
-            }
-          },
-        ));
+                    state is NewsLoading
+                        ? const SliverToBoxAdapter(child: LoadingData())
+                        : const SliverToBoxAdapter(child: ArticlesListView()),
+                  ],
+                );
+              } else if (state is NewsError) {
+                return Center(child: Text(state.message));
+              } else {
+                return Container();
+              }
+            },
+          )),
+    );
   }
 }

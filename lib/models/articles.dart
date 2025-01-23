@@ -48,7 +48,7 @@ class Article {
       url: map['url'] as String,
       urlToImage: map['urlToImage'] != null
           ? map['urlToImage'] as String
-          : 'https://media.cnn.com/api/v1/images/stellar/prod/ap25021532897195.jpg?c=16x9&q=w_800,c_fill',
+          : 'https://i1.sndcdn.com/avatars-3AMTJx3mBzeKnJMv-W6YFyw-t240x240.jpg',
       publishedAt:
           map['publishedAt'] != null ? map['publishedAt'] as String : '',
       content: map['content'] != null ? map['content'] as String : 'no content',

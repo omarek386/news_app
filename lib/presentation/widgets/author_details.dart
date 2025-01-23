@@ -24,7 +24,7 @@ class AuthorDetails extends StatelessWidget {
               width: 22.w,
               height: 22.h,
               fit: BoxFit.cover,
-              'https://media.cnn.com/api/v1/images/stellar/prod/ap25021532897195.jpg?c=16x9&q=w_800,c_fill'),
+              'https://i1.sndcdn.com/avatars-3AMTJx3mBzeKnJMv-W6YFyw-t240x240.jpg'),
         ),
         SizedBox(
           width: textWidth.w,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/models/articles.dart';
 import 'package:news_app/presentation/screens/details_screen.dart';
+import 'package:news_app/presentation/screens/splash_screen.dart';
 
 import '../logic/news_cubit.dart';
 import '../presentation/screens/home_screen.dart';
@@ -21,8 +22,8 @@ class AppRouter {
             builder: (_) => DetailsScreen(
                   article: article,
                 ));
-      // case '/register':
-      //   return MaterialPageRoute(builder: (_) => RegisterScreen());
+      case Routes.splash:
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
       default:
         return MaterialPageRoute(
             builder: (_) => Scaffold(

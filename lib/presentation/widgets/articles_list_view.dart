@@ -14,6 +14,8 @@ class ArticlesListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
         itemCount: context.read<NewsCubit>().newsList.length,
         itemBuilder: (context, index) {
           return Padding(
