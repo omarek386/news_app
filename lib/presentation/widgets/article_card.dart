@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app/models/articles.dart';
+import 'package:news_app/presentation/widgets/author_details.dart';
 
 class ArticleCard extends StatelessWidget {
   final Article article;
@@ -42,29 +43,7 @@ class ArticleCard extends StatelessWidget {
             // textBaseline: TextBaseline.ideographic,
             spacing: 5.h,
             children: [
-              Row(
-                spacing: 10.w,
-                children: [
-                  ClipOval(
-                    child: Image.network(
-                        width: 22.w,
-                        height: 22.h,
-                        fit: BoxFit.cover,
-                        'https://media.cnn.com/api/v1/images/stellar/prod/ap25021532897195.jpg?c=16x9&q=w_800,c_fill'),
-                  ),
-                  SizedBox(
-                    width: 100.w,
-                    child: Text(
-                      maxLines: 1,
-                      article.author,
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              AuthorDetails(article: article),
               SizedBox(
                 width: 190.w,
                 child: Text(

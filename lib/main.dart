@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:news_app/presentation/screens/home_screen.dart';
+import 'package:news_app/Routers/app_router.dart';
+import 'package:news_app/Routers/routes.dart';
 
 void main() async {
-  runApp(const MyApp());
+  runApp(MyApp(
+    appRouter: AppRouter(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.appRouter});
+  final AppRouter appRouter;
 
   // This widget is the root of your application.
   @override
@@ -22,7 +26,9 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: HomeScreen(),
+        // home: HomeScreen(),
+        onGenerateRoute: appRouter.onGenerateRoute,
+        initialRoute: Routes.homeScreen,
       ),
     );
   }

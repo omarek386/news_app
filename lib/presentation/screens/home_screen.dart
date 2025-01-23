@@ -1,103 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:news_app/presentation/widgets/articles_list_view.dart';
+import 'package:news_app/presentation/widgets/category_list_widget.dart';
+import 'package:news_app/themes/font_style.dart';
 
 import '../../logic/news_cubit.dart';
-import '../widgets/article_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    NewsCubit cubit = context.read<NewsCubit>();
     return Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text('Newsify',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 25.sp,
-                  fontWeight: FontWeight.bold)),
+          backgroundColor: Colors.transparent,
+          title: Text('Newsify', style: MyFontStyle.black25Bold),
           centerTitle: true,
         ),
-        body: BlocProvider(
-          create: (context) => NewsCubit(),
-          child: BlocBuilder<NewsCubit, NewsState>(
-            builder: (context, state) {
-              if (state is NewsInitial) {
-                context.read<NewsCubit>().getNews();
-                return Center(child: CircularProgressIndicator());
-              } else if (state is NewsLoading) {
-                return Center(child: CircularProgressIndicator());
-              } else if (state is NewsLoaded) {
-                return Column(
-                  children: [
-                    Container(
-                      height: 50.h,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: context.read<NewsCubit>().categories.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              context.read<NewsCubit>().selectCategory(
-                                  context.read<NewsCubit>().categories[index]);
-                            },
-                            child: Container(
-                              margin: EdgeInsets.symmetric(horizontal: 10.w),
-                              padding: EdgeInsets.symmetric(horizontal: 10.w),
-                              decoration: BoxDecoration(
-                                color: context
-                                            .read<NewsCubit>()
-                                            .selectedCategory ==
-                                        context
-                                            .read<NewsCubit>()
-                                            .categories[index]
-                                    ? Colors.deepPurple
-                                    : Colors.grey,
-                                borderRadius: BorderRadius.circular(20.r),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  context.read<NewsCubit>().categories[index],
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
+        body: BlocBuilder<NewsCubit, NewsState>(
+          builder: (context, state) {
+            if (state is NewsInitial) {
+              cubit.getNews();
+              return Center(child: CircularProgressIndicator());
+            } else if (state is NewsLoading) {
+              return Center(child: CircularProgressIndicator());
+            } else if (state is NewsLoaded) {
+              return Column(
+                children: [
+                  CategoryListWidget(),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'News For You',
+                      style: MyFontStyle.black25Bold.copyWith(fontSize: 20.sp),
                     ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: context.read<NewsCubit>().newsList.length,
-                        itemBuilder: (context, index) {
-                          return ArticleCard(
-                            article: context.read<NewsCubit>().newsList[index],
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                );
-                // return ListView.builder(
-                //   itemCount: context.read<NewsCubit>().newsList.length,
-                //   itemBuilder: (context, index) {
-                //     return ArticleCard(
-                //       article: context.read<NewsCubit>().newsList[index],
-                //     );
-                //   },
-                // );
-              } else if (state is NewsError) {
-                return Center(child: Text(state.message));
-              } else {
-                return Container();
-              }
-            },
-          ),
+                  ),
+                  ArticlesListView(),
+                ],
+              );
+            } else if (state is NewsError) {
+              return Center(child: Text(state.message));
+            } else {
+              return Container();
+            }
+          },
         ));
   }
 }
