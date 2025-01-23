@@ -5,10 +5,12 @@ import '../models/articles.dart';
 
 class NewsService {
   Dio dio;
+  String apiKey1 = '98d04cab4bb24863b67db405242fef97';
+  String apiKey2 = '847fea9aaa784f42b7dfb61e959cd8c4';
   NewsService({required this.dio});
   Future<List<Article>> getData({required String category}) async {
     Response response = await dio.get(
-        'https://newsapi.org/v2/top-headlines?country=us&apiKey=847fea9aaa784f42b7dfb61e959cd8c4&category=$category');
+        'https://newsapi.org/v2/top-headlines?country=us&apiKey=$apiKey1&category=$category');
     // log(response.data.toString());
     News news = News.fromMap(response.data);
     List<Article> articles = news.articles;
