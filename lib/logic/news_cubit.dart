@@ -20,12 +20,24 @@ class NewsCubit extends Cubit<NewsState> {
     'sports',
     'technology'
   ];
+  List<String> logo = [
+    'assets/genral.json',
+    'assets/entertament.json',
+    'assets/business.json',
+    'assets/health.json',
+    'assets/science.json',
+    'assets/sports.json',
+    'assets/tech.json'
+  ];
+  String selectedLogo = 'assets/genral.json';
   String selectedCategory = 'general';
 
-  void selectCategory(String category) {
+  set setSelectedLogo(String value) {
+    selectedLogo = value;
+  }
+
+  set selectCategory(String category) {
     selectedCategory = category;
-    emit(NewsInitial());
-    getNews();
   }
 
   void getNews() async {

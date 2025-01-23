@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,29 +12,28 @@ class CategoryListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    NewsCubit cubit = context.read<NewsCubit>();
     return SizedBox(
-      height: 30.h,
+      height: 40.h,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.symmetric(horizontal: 10.w),
-        itemCount: context.read<NewsCubit>().categories.length,
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+        itemCount: cubit.categories.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: EdgeInsets.only(right: 10.w),
             child: MaterialButton(
-              // height: 10.h,
               onPressed: () {
-                context.read<NewsCubit>().selectCategory(
-                    context.read<NewsCubit>().categories[index]);
+                cubit.setSelectedLogo = cubit.logo[index];
+                cubit.selectCategory = cubit.categories[index];
+                cubit.getNews();
+                log(cubit.selectedCategory);
               },
-              // disabledColor: Colors.red,
-              color: context.read<NewsCubit>().selectedCategory ==
-                      context.read<NewsCubit>().categories[index]
+              color: cubit.selectedCategory == cubit.categories[index]
                   ? Colors.blue
                   : Colors.white,
-
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.black),
+                side: const BorderSide(color: Colors.black),
                 borderRadius: BorderRadius.circular(20.r),
               ),
               child: Text(

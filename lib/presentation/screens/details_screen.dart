@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app/models/articles.dart';
 import 'package:news_app/presentation/widgets/author_details.dart';
+import 'package:news_app/presentation/widgets/title_image.dart';
+import 'package:news_app/themes/font_style.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({super.key, required this.article});
@@ -12,19 +14,7 @@ class DetailsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        // leading: IconButton(
-        //   icon: Icon(Icons.arrow_back),
-        //   onPressed: () async {
-        //     await bloc.close();
-        //     Navigator.pop(context);
-        //   },
-        //   color: Colors.black,
-        // ),
-        title: Text('Details Screen',
-            style: TextStyle(
-                color: Colors.black,
-                fontSize: 20.sp,
-                fontWeight: FontWeight.bold)),
+        title: Text('Details Screen', style: MyFontStyle.black20Bold),
         centerTitle: true,
         backgroundColor: Colors.transparent,
       ),
@@ -35,36 +25,15 @@ class DetailsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 10.h,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10.r),
-              child: Image.network(
-                article.urlToImage,
-                height: 150.h,
-                width: double.infinity,
-                fit: BoxFit.fill,
-              ),
-            ),
+            TitleImage(urlToImage: article.urlToImage),
             AuthorDetails(article: article, textWidth: 200),
             Text('Updated: ${article.publishedAt.substring(0, 10)}',
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  color: Colors.grey,
-                )),
+                style: MyFontStyle.grey12Normal),
             Text(
               article.title,
-              style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.bold,
-              ),
+              style: MyFontStyle.black16Bold,
             ),
-            Text(
-              article.description,
-              style: TextStyle(
-                fontSize: 14.sp,
-                color: Colors.grey,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            Text(article.description, style: MyFontStyle.grey14Bold),
           ],
         ),
       ),

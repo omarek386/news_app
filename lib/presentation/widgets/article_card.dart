@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app/models/articles.dart';
 import 'package:news_app/presentation/widgets/author_details.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class ArticleCard extends StatelessWidget {
   final Article article;
@@ -33,6 +34,25 @@ class ArticleCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(10.r),
             child: Image.network(
               article.urlToImage,
+              loadingBuilder: (context, child, loadingProgress) =>
+                  loadingProgress == null
+                      ? child
+                      : Skeletonizer(
+                          enabled: true,
+                          child: Container(
+                            height: 90.h,
+                            width: 130.w,
+                            color: Colors.grey,
+                          ),
+                        ),
+              errorBuilder: (context, error, stackTrace) => Skeletonizer(
+                enabled: true,
+                child: Container(
+                  height: 90.h,
+                  width: 130.w,
+                  color: Colors.grey,
+                ),
+              ),
               height: 90.h,
               width: 130.w,
               fit: BoxFit.cover,
@@ -45,7 +65,7 @@ class ArticleCard extends StatelessWidget {
             children: [
               AuthorDetails(article: article),
               SizedBox(
-                width: 190.w,
+                width: 180.w,
                 child: Text(
                   article.title,
                   maxLines: 2,
@@ -56,7 +76,7 @@ class ArticleCard extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 180.w,
+                width: 170.w,
                 child: Text(
                   article.publishedAt.substring(0, 10),
                   textAlign: TextAlign.end,
