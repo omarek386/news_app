@@ -5,8 +5,8 @@ import '../models/articles.dart';
 
 class NewsService {
   Dio dio;
-  String apiKey1 = '98d04cab4bb24863b67db405242fef97';
-  String apiKey2 = '847fea9aaa784f42b7dfb61e959cd8c4';
+  String apiKey1 = '';
+  String apiKey2 = '';
   NewsService({required this.dio});
   Future<List<Article>> getData({required String category}) async {
     Response response = await dio.get(
